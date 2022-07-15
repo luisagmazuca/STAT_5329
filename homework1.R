@@ -41,24 +41,13 @@ cut(temp, breaks = c(-Inf, 0, 10, 20, 30, Inf),
 #PROBLEM 2
 #a. Questions 2 and 3 in 21.2.1
 #Q2
-out <- ""
-for (x in letters) {
-  out <- stringr::str_c(out, x)
-}
+#install.packages("stringr")
+library("stringr")
+str_c(letters, collapse = "")
 
-x <- sample(100)
-sd <- 0
-for (i in seq_along(x)) {
-  sd <- sd + (x[i] - mean(x)) ^ 2
-}
-sd <- sqrt(sd / (length(x) - 1))
+sd(v2)
 
-x <- runif(100)
-out <- vector("numeric", length(x))
-out[1] <- x[1]
-for (i in 2:length(x)) {
-  out[i] <- out[i - 1] + x[i]
-}
+all.equal(cumsum(x), out)
 
 #Q3
 #Part 1
@@ -104,10 +93,19 @@ num_of_bottles_of_beer_song <- function(num_bottles,liquid, surface){
 
 #b. Questions 4 and 5 in 21.5.3
 #Q4
+#What does map(-2:2, rnorm, n = 5) do? Why?
+#Answer: it returns a vector of five random elemets elements with values between -2 and 2, the values in the vector are normally distributed.
 
+#What does map_dbl(-2:2, rnorm, n = 5) do? Why?
+#Answer: it raises an error as it is supposed to return a vector of one element
 
 #Q5
+#install.packages("purrr")
+library("purrr")
+#install.packages("ggplot2")
+library("ggplot2")
 
+map(x, ~ lm(mpg ~ wt, data = .))
 
 #PROBLEM 3
 #a. Questions 4 and 5 in 20.4.6
@@ -146,7 +144,8 @@ print_even <- function(vec){
 }
 #Q5
 #Why is x[-which(x > 0)] not the same as x[x <= 0]?
-#Answer:
+#Answer: In case we have a vector with special values such as NA and NaN, x[x <= 0] does not take into account NaN values, so it does not return those values.
+#The function which() drops the negative integers but does leave the special values including -Inf.
 
 #PROBLEM 4
 combine <- function(x,y, op){
