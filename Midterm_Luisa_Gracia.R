@@ -110,13 +110,140 @@ newVariable1 <- vector()
 
 for(i in seq_along(sulphates)){
   if(sulphates[i] <=0.4){
-    newVariable1[i] = 1
+    newVariable1[i] <- 1
   }
   else if(sulphates[i] <= 0.7 && sulphates[i] >0.4){
-    newVariable1[i] = 2
+    newVariable1[i] <- 2
   }
   else if(sulphates[i] > 0.7){
-    newVariable1[i] = 3
+    newVariable1[i] <- 3
   }
 }
 
+#Construct boxplot
+boxplot(newVariable1, quality,
+        main = "New Variable(sulphates) against Quality",
+        names = c("New Variable 1", "Quality")) #DELETE FOR REPORT
+
+boxplot(newVariable1~quality,
+        main = "New Variable(sulphates) against Quality",
+        xlab = "Quality",
+        ylab = "New Variable 1")
+
+newVariable2 <- vector()
+
+for(i in seq_along(pH)){
+  if(pH[i] <=3.15){
+    newVariable2[i] <- 1
+  }
+  else if(pH[i] <= 3.45 && pH[i] >3.15){
+    newVariable2[i] <- 2
+  }
+  else if(pH[i] >3.45){
+    newVariable2[i] <-3
+  }
+}
+
+boxplot(newVariable2~quality,
+        main = "New Variable(pH) against Quality",
+        xlab = "Quality",
+        ylab = "New Variable 2")
+
+#2
+isPrime <- function(n){
+  if(n == 2){
+    return(TRUE)
+  }
+  for(x in 2:n){
+    if(n %% x == 0){
+      return(FALSE)
+    }
+    else{
+      return(TRUE)
+    }
+  }
+}
+
+primeNumbers <-function (){
+  for( i in 2:1000){
+    if(isPrime(i)){
+      cat(i, "\n")
+    }
+  }
+}
+#Call function
+primeNumbers()
+
+#3
+set.seed(19191)
+a <- rnorm(50)
+ecdf(a)
+plot(ecdf(a))
+
+empCumDis <- function(v){
+  edf <- vector()
+  #values <- vector()
+  for(i in seq_along(v)){
+    curr <- v[i] #stores current value
+    edfVal <- 0
+    count <- 0
+    for(j in seq_along(v)){
+      if(v[j] <= curr){
+        count <- count+1
+      }
+    }
+    edfVal <- count/length(v)
+    edf <- c(edf,edfVal)
+    #values <- c(values, curr)
+  }
+  plot(v, edf)
+}
+#Call function
+empCumDis(a)
+
+#4
+#a
+x <- 0:9
+if (x[1] =1){
+  print(x)
+}
+#Error: the "=" is assigning a value to the variable x, we need to use "==" for comparisions.
+
+#b
+myfactorial <- function(x){
+  if(x == 1)
+    return(1)
+  else
+    return( x*myfactorial(x))
+
+}
+myfactorial(5)
+#Error: this is a recursive function, in a recursive function it calls itself, but there must be a change in the input variable, otherwise it will be an infinite call.
+
+#c
+f <- function(n){
+  if(n ==1)
+    return(1)
+  else{
+    if (n %% 2 == 0)
+      return (n/2)
+    else
+      return(3*x)
+  }
+}
+x <- 1
+f(x)
+n <- 3
+f(n)
+#Error:variable "x" cannot be used inside the function unless it is added as a parameter of the function f().
+
+#d
+f1 <- function(.){
+  if(runif(1)>5)
+    x <- 1
+  return (x)
+}
+x <- 0
+sapply(1:10, f1)
+x
+#Error: the parameter is not used inside the function, assigning the variable "x" with 0 outside the function does not impact the function unless it is a parameter to the function.
